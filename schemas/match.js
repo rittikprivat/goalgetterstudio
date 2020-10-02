@@ -62,14 +62,18 @@ export default {
     preview: {
         select: {
             title: 'title',
-            subtitle: 'season.title',
+            season: 'season.title',
+            type: 'type.title',
             date: 'date'
         },
         prepare(selection){
-            const {title, subtitle, date} = selection;
+            const {title, season, type, date} = selection;
+            let theDate = new Date(date);
+            const day = theDate.getDay();
+            const month = theDate.getMonth();
             return{
-                title: title,
-                subtitle: subtitle + '(' + date + ')'
+                title: theDate.toLocaleDateString('nb-NO', { month: 'short', day: 'numeric'}) + ' - ' + title,
+                subtitle: type + ': ' + season
             }
         }
 
